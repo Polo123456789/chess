@@ -1,0 +1,7 @@
+*.bat
+*.exe
+
+bin
+bin/*
+
+personal-note-*.rst
