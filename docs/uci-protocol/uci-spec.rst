@@ -14,14 +14,14 @@ Description of the universal chess interface (UCI)    April  2006
 
 * the engine must always be able to process input from stdin, even while thinking.
 
-* all command strings the engine receives will end with '\n',
-  also all commands the GUI receives should end with '\n',
-  Note: '\n' can be 0x0d or 0x0a0d or any combination depending on your OS.
+* all command strings the engine receives will end with ' ``\n`` ',
+  also all commands the GUI receives should end with ' ``\n`` ',
+  Note: ' ``\n`` ' can be 0x0d or 0x0a0d or any combination depending on your OS.
   If you use Engine and GUI in the same OS this should be no problem if you communicate in text mode,
   but be aware of this when for example running a Linux engine in a Windows GUI.
 
 * arbitrary white space between tokens is allowed
-  Example: "debug on\n" and  "   debug     on  \n" and "\t  debug \t  \t\ton\t  \n"
+  Example: "debug on ``\n`` " and  "   debug     on   ``\n`` " and " ``\t``   debug  ``\t``    ``\t``  ``\t`` on ``\t``    ``\n`` "
   all set the debug mode of the engine on.
 
 * The engine will always be in forced mode which means it should never start calculating
@@ -35,8 +35,8 @@ Description of the universal chess interface (UCI)    April  2006
 
 * if the engine or the GUI receives an unknown command or token it should just ignore it and try to
   parse the rest of the string in this line.
-  Examples: "joho debug on\n" should switch the debug mode on given that joho is not defined,
-            "debug joho on\n" will be undefined however.
+  Examples: "joho debug on ``\n`` " should switch the debug mode on given that joho is not defined,
+            "debug joho on ``\n`` " will be undefined however.
 
 * if the engine receives a command which is not supposed to come, for example "stop" when the engine is
   not calculating, it should also just ignore it.
@@ -91,11 +91,11 @@ These are all the command the engine gets from the interface.
 	The substrings "value" and "name" should be avoided in <id> and <x> to allow unambiguous parsing,
 	for example do not use <name> = "draw value".
 	Here are some strings for the example below:
-	   "setoption name Nullmove value true\n"
-      "setoption name Selectivity value 3\n"
-	   "setoption name Style value Risky\n"
-	   "setoption name Clear Hash\n"
-	   "setoption name NalimovPath value c:\chess\tb\4;c:\chess\tb\5\n"
+	   "setoption name Nullmove value true ``\n`` "
+      "setoption name Selectivity value 3 ``\n`` "
+	   "setoption name Style value Risky ``\n`` "
+	   "setoption name Clear Hash ``\n`` "
+	   "setoption name NalimovPath value c:\chess ``\t`` b\4;c:\chess ``\t`` b\5 ``\n`` "
 
 * register
 	this is the command to try to register an engine or to tell the engine that registration
@@ -188,10 +188,10 @@ Engine to GUI:
 * id
 	* name <x>
 		this must be sent after receiving the "uci" command to identify the engine,
-		e.g. "id name Shredder X.Y\n"
+		e.g. "id name Shredder X.Y ``\n`` "
 	* author <x>
 		this must be sent after receiving the "uci" command to identify the engine,
-		e.g. "id author Stefan MK\n"
+		e.g. "id author Stefan MK ``\n`` "
 
 * uciok
 	Must be sent after the id and optional options to tell the GUI that the engine
@@ -220,12 +220,12 @@ Engine to GUI:
 	If the engine reports "copyprotection error" the GUI should not use this engine
 	and display an error message instead!
 	The code in the engine can look like this
-      TellGUI("copyprotection checking\n");
+      TellGUI("copyprotection checking ``\n`` ");
 	   // ... check the copy protection here ...
 	   if(ok)
-	      TellGUI("copyprotection ok\n");
+	      TellGUI("copyprotection ok ``\n`` ");
       else
-         TellGUI("copyprotection error\n");
+         TellGUI("copyprotection error ``\n`` ");
          
 * registration
 	this is needed for engines that need a username and/or a code to function with all features.
@@ -421,11 +421,11 @@ Engine to GUI:
 		a predefined value of this parameter is x
 	Examples:
     Here are 5 strings for each of the 5 possible types of options
-	   "option name Nullmove type check default true\n"
-      "option name Selectivity type spin default 2 min 0 max 4\n"
-	   "option name Style type combo default Normal var Solid var Normal var Risky\n"
-	   "option name NalimovPath type string default c:\\n"
-	   "option name Clear Hash type button\n"
+	   "option name Nullmove type check default true ``\n`` "
+      "option name Selectivity type spin default 2 min 0 max 4 ``\n`` "
+	   "option name Style type combo default Normal var Solid var Normal var Risky ``\n`` "
+	   "option name NalimovPath type string default c:\ ``\n`` "
+	   "option name Clear Hash type button ``\n`` "
 
 
 
