@@ -9,11 +9,10 @@ uci-interface
 
 - [X] Create spec
 
-- [ ] ``uci::metadata``
 - [ ] ``uci::config``
   - [ ] ``uci::threadsafe_unordered_map``
   - [ ] ``uci::option``
-- [ ] ``uci::limits``
+- [X] ``uci::limits``
 - [ ] ``uci::info``
   - [ ] Message types
   - [ ] ``uci::info::log``
