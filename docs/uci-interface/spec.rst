@@ -88,29 +88,7 @@ The interface with the GUI should be done using ``stdin`` and ``stdout``.
 
 **Note:** Everything is contained in ``namespace uci``.
 
-3.2.1 Compile time configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Before including ``<uci/uci.hpp>``, you could define:
-
-* ``UCI_ENGINE_AUTHOR_NAME``: To give the name of the author. (Defaults to
-  ``"Anonymous"``)
-
-* ``UCI_ENGINE_NAME``: To give a name to your engine. (Defaults to ``"Anonymous
-  engine"``).
-
-* ``UCI_ENGINE_REQUIRES_REGISTRATION``: If you want for people to have an
-  user name and code to use the engine. (Defaults to ``false``).
-
-* ``UCI_ENGINE_REQUIRES_COPY_PROTECTION``: If you have some sort of copy
-  protection in your engine (Defaults to ``false``).
-
-* ``UCI_ENGINE_CAN_PONDER``: To indicate if your engine has a ponder mode.
-  (Defaults to ``false``).
-
-This will be used to fill ``uci::metadata``.
-
-3.2.2 Runtime configuration
+3.2.1 Runtime configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use ``uci::config`` to indicate what configuration values can be
@@ -119,9 +97,9 @@ the UCI spec).
 
 ``uci::config`` is a ``uci::threadsafe_unordered_map<std::string,
 uci::option>``. The way to list those options will be described latter in
-`3.2.6 Creating the interface`_.
+`3.2.5 Creating the interface`_.
 
-3.2.2.1 uci::option
+3.2.1.1 uci::option
 ^^^^^^^^^^^^^^^^^^^
 
 Holds the type and string representation of the configuration options.
@@ -170,7 +148,7 @@ For example, you could do something like:
 constraints given. If the GUI sends a ``setoption`` command with incorrect
 values, it will be sent an ``info`` command indicating whats wrong.
 
-3.2.3 Constraints on the moves
+3.2.2 Constraints on the moves
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The struct ``uci::limits`` is used to tell the engine the limitations that the
@@ -189,36 +167,38 @@ The members or ``uci::limits`` are:
     Search in ponder mode.
 
 * ``std::chrono::milliseconds wtime``
-    The time white has left on the clock. 
+    The time white has left on the clock (``0`` if there are no time needs).
 
 * ``std::chrono::milliseconds btime``
-    The time black has left on the clock.
+    The time black has left on the clock (``0`` if there are no time needs).
 
 * ``std::chrono::milliseconds winc``
-    The time white has left on the clock.
+    The increment that white has.
 
-* ``std::chrono::milliseconds winc``
-    The time white has left on the clock.
+* ``std::chrono::milliseconds binc``
+    The increment that black has
 
 * ``size_t moves_to_go``
-    The amount of moves till the next time control.
+    The amount of moves till the next time control. (``0`` if there is no time
+    control)
 
 * ``size_t depth``
-    The limit depth that the engine can search.
+    The limit depth that the engine can search (``0`` if there is no limit).
 
 * ``size_t nodes``
-    The amount of nodes that can be searched.
+    The amount of nodes that can be searched (``0`` if there is no limit).
 
 * ``size_t mate``
-    Search for mate in ``mate`` moves.
+    Search for mate in ``mate`` moves (``0`` if there is no limit).
 
 * ``std::chrono::milliseconds move_time``
-    Search exactly ``move_time`` milliseconds.
+    Search exactly ``move_time`` milliseconds (``0`` if there is no limit from
+    the gui).
 
 * ``bool infinite``
     Search until the stop command. Don't exit the search without being told so.
 
-3.2.4 Sending messages to the GUI
+3.2.3 Sending messages to the GUI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``namespace info`` contains optional utilities that you could use to send
@@ -235,7 +215,7 @@ following:
 * ``info::selective_depth``: Used to represent the current selective depth of
   the search.
 
-* ``info::time``: The time searched in ``std::chrono::miliseconds``.
+* ``info::time``: The time searched in ``std::chrono::milliseconds``.
 
 * ``info::nodes``: The nodes searched.
 
@@ -280,7 +260,7 @@ following:
 
 * ``info::current_line``: The current line the engine is calculating.
 
-3.2.4.2 Functions
+3.2.3.2 Functions
 ^^^^^^^^^^^^^^^^^
 
 .. code:: cpp
@@ -304,7 +284,7 @@ Will log in a UCI info message the information that it is given.
 
 It will check that ``T`` is one of the classes listed above.
 
-3.2.4.3 Example
+3.2.3.3 Example
 ^^^^^^^^^^^^^^^
 
 Send current best line:
@@ -333,7 +313,7 @@ Send debug messages:
         info::cdebug("Finished initialization")
     );
 
-3.2.5 Global variables
+3.2.4 Global variables
 ~~~~~~~~~~~~~~~~~~~~~~
 
 ``uci::debug``
@@ -346,32 +326,37 @@ Send debug messages:
   A ``std::atomic<bool>`` that is used to tell the engine that it should stop
   searching.
 
-3.2.6 Creating the interface
+3.2.5 Creating the interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To create the interface, you should inherit from ``uci::engine_interface``, and
 implement the following virtual functions.
 
 * ``bool check_register(void)``
-    Implement only if you defined ``UCI_ENGINE_REQUIRES_REGISTRATION``. Return
-    ``true`` if the automatic register check was successful. If for the
-    register check you need the user and code, only implement the next
-    function.
+  Return ``true`` if the automatic register check was successful. If for the
+  register check you need the user and code, only implement the next function.
+  If you don't have to check for registration, implement none.
 
 * ``bool check_register(const std::string& user, const std::string& code)``
-    Implement only if you defined ``UCI_ENGINE_REQUIRES_REGISTRATION``. Return
-    ``true`` if the registration check was successful. **Note:** If
+    Return ``true`` if the registration check was successful. **Note:** If
     registration fails, then the interface will ignore commands until the
     registration is successful or it receives a ``quit`` command.
 
 * ``bool check_copy_protection(void)``
-    Implement only if you defined ``UCI_ENGINE_REQUIRES_COPY_PROTECTION``.
-    Return ``true`` if there aren't any copy protection problems. **Note:** If
-    the check fails, then the interface will ignore commands until it receives
+    Return ``true`` if there aren't any copy protection problems. If your
+    engine does not have copy protection don't implement it. **Note:** If the
+    check fails, then the interface will ignore commands until it receives
     a ``quit`` command.
 
 * ``bool load_options(void)``
-    Load the default options in ``uci::config``.
+    Load the default options in ``uci::config``, and fill the information about
+    the engine. To load the meta data you can use the following functions:
+
+    * ``void set_author_name(const char* name)``
+    * ``void set_engine_name(cosnt char* name)``
+    * ``void requires_registration(bool v)``
+    * ``void requires_copy_protection(bool v)``
+    * ``void can_ponder(bool v)``
 
 * ``void update_position(const std::string& fen, const std::string& moves)``
     Should update the position that the engine holds.
@@ -381,14 +366,12 @@ implement the following virtual functions.
     in another thread.
 
 * ``bool ponder_mode(void)``
-    Make the engine run in ponder mode. (Only if you defined
-    ``UCI_ENGINE_CAN_PONDER``)
+    Make the engine run in ponder mode.
 
 * ``bool search_mode(void)``
-    Make the engine run in search mode. (Only if you defined
-    ``UCI_ENGINE_CAN_PONDER``)
+    Make the engine run in search mode.
 
-3.2.7 Example
+3.2.6 Example
 ~~~~~~~~~~~~~
 
 .. TODO(pabsan): Create an example based on the finished interface.
