@@ -14,4 +14,4 @@ include(CTest)
 include(Catch)
 include(Warnings)
 
-
+add_subdirectory("./src/")
