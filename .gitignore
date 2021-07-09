@@ -4,4 +4,7 @@
 bin
 bin/*
 
+.cache
+compile_commands.json
+
 personal-note-*.rst
