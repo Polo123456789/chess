@@ -265,8 +265,8 @@ following:
 
 .. code:: cpp
 
-    template <class T, class ...Arg>
-    void info::log(T t, Arg ...args);
+    template <class MessageType, class ...Arg>
+    void info::log(MessageType m, Arg ...args);
 
 Will log in a UCI info message the information that it is given.
 
@@ -277,12 +277,10 @@ In case any of the checks fail, the code should not compile.
 
 .. code:: cpp
 
-    template <class T>
-    void info::log(T t);
+    void info::log(MessageType m);
 
-Will log in a UCI info message the information that it is given.
-
-It will check that ``T`` is one of the classes listed above.
+Where ``MessageType`` is one of the types mentioned above. Will log in a UCI
+info message the information that it is given.
 
 3.2.3.3 Example
 ^^^^^^^^^^^^^^^
@@ -296,9 +294,9 @@ Send current best line:
     using namespace uci;
 
     info::log(
-        info::depth(move_tree.depth()),
-        info::score::centipawns(move_tree.top_line().eval()),
-        info::pv(move_tree.top_line().uci_string());
+        info::depth{move_tree.depth()},
+        info::score::centipawns{move_tree.top_line().eval()},
+        info::pv{move_tree.top_line().uci_string()};
     );
 
 Send debug messages:
@@ -310,7 +308,7 @@ Send debug messages:
     using namespace uci;
 
     info::log(
-        info::cdebug("Finished initialization")
+        info::cdebug{"Finished initialization"}
     );
 
 3.2.4 Global variables
