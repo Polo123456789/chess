@@ -1,4 +1,4 @@
-add_library(uci-interface)
-
-target_include_directories(uci-interface PUBLIC "./include")
-# target_sources(uci-interface)
+add_library(uci-interface
+    "./uci-interface/globals.cpp"
+)
+target_include_directories(uci-interface PRIVATE "./include")

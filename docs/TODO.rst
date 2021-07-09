@@ -16,7 +16,7 @@ uci-interface
 - [ ] ``uci::info``
   - [ ] Message types
   - [ ] ``uci::info::log``
-- [ ] Globals
+- [X] Globals
 - [ ] ``uci::engine_interface``
   - [ ] Defaults for functions.
   - [ ] ``uci::engine_interface::loop``
