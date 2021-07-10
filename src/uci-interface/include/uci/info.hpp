@@ -99,24 +99,24 @@ UCI_EXPAND_DEBUG_FUNCTION(cdebug, "string")
 
 UCI_EXPAND_STRUCT(time, std::chrono::milliseconds)
 
-inline void imp_log(const std::chrono::milliseconds &message) {
-    std::cout << "time " << message.count() << ' ';
+inline void imp_log(const time &message) {
+    std::cout << "time " << message.time.count() << ' ';
 }
 
 // -------------------       Log      -------------------------------
 
 template<class MessageType, class... Arg>
-inline void imp_variadic_log(const MessageType &m, const Arg &...args) {
+inline void imp_log(const MessageType &m, const Arg &...args) {
     imp_log(m);
     if constexpr (sizeof...(args) != 0) {
-        imp_variadic_log(args...);
+        imp_log(args...);
     }
 }
 
 template<class... Messages>
 inline void log(const Messages&... messages) {
     std::cout << "info ";
-    imp_variadic_log(messages...);
+    imp_log(messages...);
     std::cout << '\n';
 }
 
