@@ -7,6 +7,9 @@
 
 namespace uci {
 
+/**
+ * The limitations the GUI imposed on the search of the moves.
+ */
 struct limits {
     /**
      * Limit the search to the following moves
