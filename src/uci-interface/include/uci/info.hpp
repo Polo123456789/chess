@@ -73,15 +73,15 @@ struct score final {
     UCI_EXPAND_STRUCT(upperbound, long long)
 };
 
-UCI_EXPAND_NAMESPACED_FUNCTION(score, centipawns, "cp")
-UCI_EXPAND_NAMESPACED_FUNCTION(score, mate, "mate")
+UCI_EXPAND_NAMESPACED_FUNCTION(score, centipawns, "score cp")
+UCI_EXPAND_NAMESPACED_FUNCTION(score, mate, "score mate")
 
 inline void imp_log(const score::upperbound &message) {
-    std::cout << "cp " << message.upperbound << " uperbound ";
+    std::cout << "score cp " << message.upperbound << " upperbound ";
 }
 
 inline void imp_log(const score::lowerbound &message) {
-    std::cout << "cp " << message.lowerbound << " lowerbound ";
+    std::cout << "score cp " << message.lowerbound << " lowerbound ";
 }
 
 // -------------------      Debug     -------------------------------
@@ -118,6 +118,24 @@ inline void log(const Messages&... messages) {
     std::cout << "info ";
     imp_log(messages...);
     std::cout << '\n';
+}
+
+template<>
+inline void log(const debug &message) {
+    if (uci::debug) {
+        std::cout << "info ";
+        imp_log(message);
+        std::cout << '\n';
+    }
+}
+
+template<>
+inline void log(const cdebug &message) {
+    if (uci::debug) {
+        std::cout << "info ";
+        imp_log(message);
+        std::cout << '\n';
+    }
 }
 
 } // namespace uci::info
