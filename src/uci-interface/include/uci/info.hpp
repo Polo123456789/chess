@@ -122,6 +122,10 @@ inline void log(const Messages&... messages) {
 
 } // namespace uci::info
 
+#undef UCI_EXPAND_STRUCT
+#undef UCI_EXPAND_FUNCTION
+#undef UCI_EXPAND_DEBUG_FUNCTION
+#undef UCI_EXPAND_NAMESPACED_FUNCTION
 #undef UCI_EXPAND_STUCT_AND_FUNCTION
 
 #endif
