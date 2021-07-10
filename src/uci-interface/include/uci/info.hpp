@@ -106,12 +106,11 @@ inline void imp_log(const std::chrono::milliseconds &message) {
 // -------------------       Log      -------------------------------
 
 template<class MessageType, class... Arg>
-inline void imp_log(const MessageType& m, Arg... args) {
+inline void imp_log(const MessageType& m, const Arg&... args) {
     imp_log(m);
     imp_log(args...);
 }
 
-// NOTE: This one gets called  if the variadic took an odd number of arguments
 inline void imp_log(void) {}
 
 template<class... Messages>

@@ -7,7 +7,7 @@ int main(int /*argc*/, char * /*argv*/[]) {
         uci::info::multipv{1},
         uci::info::score::centipawns{10},
         uci::info::nodes{0},
-        uci::info::string{"e2e4 c7c5"}
+        uci::info::pv{"e2e4 c7c5"}
     );
     return 0;
 }
