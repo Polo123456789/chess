@@ -65,12 +65,12 @@ UCI_EXPAND_STUCT_AND_FUNCTION(current_line, std::string, "currline")
 
 
 struct score final {
-    UCI_EXPAND_STRUCT(centipawns, size_t)
+    UCI_EXPAND_STRUCT(centipawns, long long)
     UCI_EXPAND_STRUCT(mate, size_t)
 
     // This two will need a special function
-    UCI_EXPAND_STRUCT(lowerbound, size_t)
-    UCI_EXPAND_STRUCT(upperbound, size_t)
+    UCI_EXPAND_STRUCT(lowerbound, long long)
+    UCI_EXPAND_STRUCT(upperbound, long long)
 };
 
 UCI_EXPAND_NAMESPACED_FUNCTION(score, centipawns, "cp")
@@ -106,17 +106,17 @@ inline void imp_log(const std::chrono::milliseconds &message) {
 // -------------------       Log      -------------------------------
 
 template<class MessageType, class... Arg>
-inline void imp_log(const MessageType& m, const Arg&... args) {
+inline void imp_variadic_log(const MessageType &m, const Arg &...args) {
     imp_log(m);
-    imp_log(args...);
+    if constexpr (sizeof...(args) != 0) {
+        imp_variadic_log(args...);
+    }
 }
-
-inline void imp_log(void) {}
 
 template<class... Messages>
 inline void log(const Messages&... messages) {
     std::cout << "info ";
-    imp_log(messages...);
+    imp_variadic_log(messages...);
     std::cout << '\n';
 }
 
