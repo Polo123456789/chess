@@ -10,6 +10,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
+set(CATCH_INCLUDE_PATH "${CMAKE_SOURCE_DIR}/vendor")
+
 include(CTest)
 include(Catch)
 include(Warnings)
