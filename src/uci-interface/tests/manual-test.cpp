@@ -1,3 +1,7 @@
+/**
+ * This file is just used for quick manual testing, feel free to ignore it.
+ */
+
 #include <uci/info.hpp>
 
 int main(int /*argc*/, char * /*argv*/[]) {
