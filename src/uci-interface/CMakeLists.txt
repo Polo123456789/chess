@@ -3,4 +3,6 @@ add_library(uci-interface
 )
 target_include_directories(uci-interface PRIVATE "./include")
 
-add_subdirectory("./tests")
+if (CHESS_BUILD_TESTS)
+    add_subdirectory("./tests")
+endif()

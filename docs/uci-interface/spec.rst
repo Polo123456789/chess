@@ -95,9 +95,9 @@ You can use ``uci::config`` to indicate what configuration values can be
 changed by the GUI, and read those options (See ``option`` and ``setoption`` on
 the UCI spec).
 
-``uci::config`` is a ``uci::threadsafe_unordered_map<std::string,
-uci::option>``. The way to list those options will be described latter in
-`3.2.5 Creating the interface`_.
+``uci::config`` is a ``std::unordered_map<const char *, uci::option>``. The way
+to list those options will be described latter in `3.2.5 Creating the
+interface`_.
 
 3.2.1.1 uci::option
 ^^^^^^^^^^^^^^^^^^^
@@ -130,7 +130,7 @@ You can use the member function:
 .. code:: cpp
     
     template <class Type>
-    typename Type::type option::get(void);
+    typename Type::type option::as(void);
 
 To get the value of it.
 
@@ -141,8 +141,8 @@ For example, you could do something like:
     using uci::option::check;
     using uci::option::combo;
 
-    bool own_book = uci::config["OwnBook"].get<check>();
-    std::string style = uci::config["Style"].get<combo>();
+    bool own_book = uci::config.at("OwnBook").as<check>();
+    std::string style = uci::config.at("Style").as<combo>();
 
 **Note:** The values given by the config options will always be inside the
 constraints given. If the GUI sends a ``setoption`` command with incorrect
