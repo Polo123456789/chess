@@ -19,5 +19,13 @@ include_directories(${GSL_INCLUDE_PATH})
 include(CTest)
 include(Catch)
 include(Warnings)
+include(Sanitizers)
 
-add_subdirectory("./src/")
+option(CHESS_BUILD_TESTS "" OFF)
+option(CHESS_DEBUG_BUILD "" OFF)
+
+if (NOT CHESS_DEBUG_BUILD)
+    add_compile_definitions(NDEBUG)
+endif()
+
+add_subdirectory("./src")
