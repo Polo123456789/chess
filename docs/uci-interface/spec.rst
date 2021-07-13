@@ -270,18 +270,6 @@ following:
 
 Will log in a UCI info message the information that it is given.
 
-It will check that ``T`` is one of the classes listed above, and will check
-that ``T`` is not ``info::string``, ``info::cstring`` or ``info::debug``.
-
-In case any of the checks fail, the code should not compile.
-
-.. code:: cpp
-
-    void info::log(MessageType m);
-
-Where ``MessageType`` is one of the types mentioned above. Will log in a UCI
-info message the information that it is given.
-
 3.2.3.3 Example
 ^^^^^^^^^^^^^^^
 
