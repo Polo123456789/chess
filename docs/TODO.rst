@@ -10,7 +10,6 @@ uci-interface
 - [X] Create spec
 
 - [ ] ``uci::config``
-    - [ ] ``uci::threadsafe_unordered_map``
     - [ ] ``uci::option``
 
 - [X] ``uci::limits``
