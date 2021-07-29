@@ -7,6 +7,7 @@
 #include <chrono>
 #include <string>
 #include <type_traits>
+#include <cstdint>
 
 //
 // A lot of this is repetetive, so lets use some macros
@@ -65,12 +66,12 @@ UCI_EXPAND_STUCT_AND_FUNCTION(current_line, std::string, "currline")
 
 
 struct score final {
-    UCI_EXPAND_STRUCT(centipawns, long long)
+    UCI_EXPAND_STRUCT(centipawns, int64_t)
     UCI_EXPAND_STRUCT(mate, size_t)
 
     // This two will need a special function
-    UCI_EXPAND_STRUCT(lowerbound, long long)
-    UCI_EXPAND_STRUCT(upperbound, long long)
+    UCI_EXPAND_STRUCT(lowerbound, int64_t)
+    UCI_EXPAND_STRUCT(upperbound, int64_t)
 };
 
 UCI_EXPAND_NAMESPACED_FUNCTION(score, centipawns, "score cp")
