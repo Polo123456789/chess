@@ -21,8 +21,11 @@ class option {
         using type = std::string;
     };
 
-    template <class Type>
+    template<class Type>
     typename Type::type as(void);
+
+   private:
+
 };
 
 
