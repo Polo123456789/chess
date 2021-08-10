@@ -1,3 +1,3 @@
-[submodule ".\\vendor\\GSL"]
-	path = .\\vendor\\GSL
+[submodule "vendor/GSL"]
+        path = vendor/GSL
 	url = https://github.com/microsoft/GSL.git
