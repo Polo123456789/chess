@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\docs",
+    "\\docs\\uci-interface",
+    "\\src",
+    "\\src\\uci-interface",
+    "\\src\\uci-interface\\include",
+    "\\src\\uci-interface\\include\\uci"
+  ],
+  "SelectedNode": "\\src\\uci-interface\\include\\uci\\info.hpp",
+  "PreviewInSolutionExplorer": false
+}
