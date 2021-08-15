@@ -20,19 +20,19 @@
 
 #define UCI_EXPAND_FUNCTION(name, identifier) \
     inline void imp_log(const name &message) { \
-        ::std::cout << identifier " " << message.name << ' '; \
+        ::std::cout << identifier << " " << message.name << ' '; \
     }
 
 #define UCI_EXPAND_DEBUG_FUNCTION(name, identifier) \
     inline void imp_log(const name &message) { \
         if (uci::debug) { \
-            ::std::cout << identifier " " << message.name << ' '; \
+            ::std::cout << identifier << " " << message.name << ' '; \
         } \
     }
 
 #define UCI_EXPAND_NAMESPACED_FUNCTION(nmspace, name, identifier) \
     inline void imp_log(const nmspace::name &message) { \
-        ::std::cout << identifier " " << message.name << ' '; \
+        ::std::cout << identifier << " " << message.name << ' '; \
     }
 
 #define UCI_EXPAND_STRUCT_AND_FUNCTION(name, type, identifier) \
