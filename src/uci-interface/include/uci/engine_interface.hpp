@@ -1,0 +1,5 @@
+#ifndef UCI_ENGINE_INTERFACE_HPP
+#define UCI_ENGINE_INTERFACE_HPP
+
+
+#endif
