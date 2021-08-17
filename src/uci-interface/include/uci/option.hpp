@@ -37,30 +37,6 @@ class option {
     template<option_types type>
     [[nodiscard]] auto as(void) const;
 
-    template<>
-    [[nodiscard]] auto as<option_types::check>(void) const {
-        throw_on_wrong_type(option_types::check);
-        return ((value == "True") || value == "true");
-    }
-
-    template<>
-    [[nodiscard]] auto as<option_types::spin>(void) const {
-        throw_on_wrong_type(option_types::spin);
-        return std::stoi(value);
-    }
-
-    template<>
-    [[nodiscard]] auto as<option_types::combo>(void) const {
-        throw_on_wrong_type(option_types::combo);
-        return value;
-    }
-
-    template<>
-    [[nodiscard]] auto as<option_types::string>(void) const {
-        throw_on_wrong_type(option_types::string);
-        return value;
-    }
-
     /**
      * For an option of type `check`
      */
@@ -97,6 +73,29 @@ class option {
     void throw_on_wrong_type(option_types expected) const;
 };
 
+template<>
+[[nodiscard]] inline auto option::as<option_types::check>(void) const {
+    throw_on_wrong_type(option_types::check);
+    return ((value == "True") || value == "true");
+}
+
+template<>
+[[nodiscard]] inline auto option::as<option_types::spin>(void) const {
+    throw_on_wrong_type(option_types::spin);
+    return std::stoi(value);
+}
+
+template<>
+[[nodiscard]] inline auto option::as<option_types::combo>(void) const {
+    throw_on_wrong_type(option_types::combo);
+    return value;
+}
+
+template<>
+[[nodiscard]] inline auto option::as<option_types::string>(void) const {
+    throw_on_wrong_type(option_types::string);
+    return value;
+}
 
 } // namespace uci
 

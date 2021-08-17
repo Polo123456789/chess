@@ -16,6 +16,7 @@ std::string uci::describe(option_types o) {
     case option_types::string:
         return "string";
     }
+    return "Value is not an option type";
 }
 
 void uci::option::throw_on_wrong_type(option_types expected) const {
