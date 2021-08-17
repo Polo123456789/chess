@@ -4,7 +4,13 @@
 bin
 bin/*
 
+out
+out/*
+
+CMakeSettings.txt
+
 .cache
 compile_commands.json
 
 personal-note-*.rst
+/.vs
