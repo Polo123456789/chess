@@ -8,7 +8,7 @@
 namespace uci {
 	
 	class engine_interface {
-   public:
+    public:
         /**
         * Return whether the automatic register check was passed
         */
@@ -16,7 +16,7 @@ namespace uci {
         /**
         * Return true if registration is successful
         */
-		virtual bool check_register(const std::string &user,
+	    virtual bool check_register(const std::string &user,
                                     const std::string &code) = 0;
         /**
         * Returns true if copy protection OK 
