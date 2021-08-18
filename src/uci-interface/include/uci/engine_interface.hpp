@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include <limits.hpp>
+
 namespace uci {
 	
 	class engine_interface {
@@ -40,7 +42,7 @@ namespace uci {
         /*
         * Returns the best move in UCI format
         */
-        virtual std::string get_best_move(uci::limits l) = 0;
+        virtual std::string get_best_move(const limits &l) = 0;
         /*
         * Sets the engine to ponder mode
         */
