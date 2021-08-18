@@ -3,11 +3,11 @@
 
 #include <string>
 
-#include <limits.hpp>
+#include <uci/limits.hpp>
 
 namespace uci {
 	
-	class engine_interface {
+    class engine_interface {
     public:
         /**
         * Return whether the automatic register check was passed
