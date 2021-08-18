@@ -8,6 +8,7 @@ target_link_libraries(manual-test PRIVATE uci-interface)
 add_executable(unit-tests 
     "./unit/main.cpp"
     "./unit/info.cpp"
+    "./unit/option_creation.cpp"
 )
 target_include_directories(unit-tests PRIVATE "./../include/")
 target_include_directories(unit-tests PRIVATE ${CATCH_INCLUDE_PATH})

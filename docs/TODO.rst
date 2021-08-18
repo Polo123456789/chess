@@ -9,9 +9,10 @@ uci-interface
 
 - [X] Create spec
 
-- [ ] ``uci::config``
-    - [ ] ``uci::option``
-    - [ ] Tests
+- [X] ``uci::config``
+    - [X] ``uci::option``
+    - [X] Tests
+    - [ ] Define internal API
 
 - [X] ``uci::limits``
 
