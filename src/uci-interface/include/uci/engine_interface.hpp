@@ -27,7 +27,7 @@ class engine_interface {
     /**
      * Loads default options
      */
-    virtual bool load_options(void);
+    [[nodiscard]] virtual bool load_options(void);
 
     /**
      * The following are metadata functions
@@ -51,12 +51,12 @@ class engine_interface {
     /*
      * Sets the engine to ponder mode
      */
-    virtual bool ponder_mode(void) = 0;
+    [[nodiscard]] virtual bool ponder_mode(void) = 0;
 
     /*
      * Sets the engine to search mode
      */
-    virtual bool search_mode(void) = 0;
+    [[nodiscard]] virtual bool search_mode(void) = 0;
 
    private:
     const char* author_name = nullptr;
