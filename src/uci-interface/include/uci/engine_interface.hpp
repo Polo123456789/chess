@@ -58,6 +58,12 @@ class engine_interface {
      */
     [[nodiscard]] virtual bool search_mode(void) = 0;
 
+    virtual ~engine_interface() = default;
+    engine_interface(const engine_interface& other) = delete;
+    engine_interface(engine_interface&& other) = delete;
+    engine_interface& operator=(const engine_interface& other) = delete;
+    engine_interface& operator=(engine_interface&& other) = delete;
+
    private:
     const char* author_name = nullptr;
     const char* engine_name = nullptr;
