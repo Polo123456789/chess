@@ -12,7 +12,7 @@ class engine_interface {
     /**
      * Return whether the automatic register check was passed
      */
-    virtual bool check_register(void) = 0;
+    virtual bool check_register(void);
 
     /**
      * Return true if registration is successful
@@ -22,12 +22,12 @@ class engine_interface {
     /**
      * Returns true if copy protection OK
      */
-    virtual bool check_copy_protection(void) = 0;
+    virtual bool check_copy_protection(void);
 
     /**
      * Loads default options
      */
-    virtual bool load_options(void) = 0;
+    virtual bool load_options(void);
 
     /**
      * The following are metadata functions
