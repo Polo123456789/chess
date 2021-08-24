@@ -64,6 +64,10 @@ class option {
      */
     explicit option(std::string val, call_back_t on_change = nullptr);
 
+    [[nodiscard]] option_types get_type(void) const {
+        return type;
+    }
+
    private:
     option_types type;
     std::string value;

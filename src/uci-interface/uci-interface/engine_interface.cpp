@@ -30,6 +30,7 @@ void uci::engine_interface::run(void) {
     }
 
     for (const auto& [key, val] : config) {
+        // TODO(pabsa): Missing a way for options to identify themselves
 
     }
 

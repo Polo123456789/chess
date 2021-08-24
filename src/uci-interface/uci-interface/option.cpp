@@ -3,6 +3,8 @@
 
 using uci::option_types;
 
+// This code was generated automatically with `enum-describer`, dont modify it.
+// If the enum changes, use it again.
 std::string uci::describe(option_types o) {
     switch (o) {
     case option_types::check:
@@ -16,7 +18,7 @@ std::string uci::describe(option_types o) {
     case option_types::string:
         return "string";
     }
-    return "Value is not an option type";
+    return "Value not part of the enum";
 }
 
 void uci::option::throw_on_wrong_type(option_types expected) const {
