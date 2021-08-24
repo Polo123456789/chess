@@ -1,9 +1,12 @@
 #ifndef UCI_ENGINE_INTERFACE_HPP
 #define UCI_ENGINE_INTERFACE_HPP
 
-#include <string>
-
 #include <uci/limits.hpp>
+
+#include <string>
+#include <sstream>
+#include <iostream>
+
 
 namespace uci {
 
@@ -58,6 +61,8 @@ class engine_interface {
      */
     [[nodiscard]] virtual bool search_mode(void) = 0;
 
+    void run(void);
+
     virtual ~engine_interface() = default;
     engine_interface(const engine_interface& other) = delete;
     engine_interface(engine_interface&& other) = delete;
@@ -65,6 +70,12 @@ class engine_interface {
     engine_interface& operator=(engine_interface&& other) = delete;
 
    private:
+
+    /**
+     * Will ignore all input until given a `quit` command
+     */
+    static void do_nothing_loop(void);
+
     const char* author_name = nullptr;
     const char* engine_name = nullptr;
     bool engine_requires_registration = false;

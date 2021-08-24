@@ -1,4 +1,78 @@
 #include <uci/engine_interface.hpp>
+#include <uci/config.hpp>
+#include <uci/info.hpp>
+
+#include <utility>
+
+using line_iterators = std::pair<std::istream_iterator<std::string>,
+                                 std::istream_iterator<std::string>>;
+
+static std::stringstream get_line(void);
+static line_iterators get_iterators(std::istream& stream);
+
+void uci::engine_interface::run(void) {
+    auto line = get_line();
+    auto [begin, end] = get_iterators(line);
+
+    // If the engine doesnt start with a `uci` command, then it is not following
+    // the uci protocol.
+    if (*begin != "uci") {
+        std::cout << "Some error message"; // TODO(pabsa)
+        return;
+    }
+
+    // If options couldt be loaded, then log the error and wait for quit
+    if (!load_options()) {
+        uci::info::log(uci::info::cstring{
+            "There was an error loading the default options"});
+        do_nothing_loop();
+        return;
+    }
+
+    for (const auto& [key, val] : config) {
+
+    }
+
+
+    if (engine_requires_registration) {
+        std::cout << "registration cheking\n";
+        if (!check_register()) {
+            std::cout << "registration error\n";
+        }
+    }
+
+    if (engine_requires_copyprotection) {
+
+    }
+}
+
+
+
+static std::stringstream get_line(void) {
+    std::string buffer;
+    std::getline(std::cin, buffer);
+    return std::stringstream(buffer);
+}
+
+static line_iterators get_iterators(std::istream& stream) {
+    return {std::istream_iterator<std::string>{stream},
+            std::istream_iterator<std::string>{}};
+}
+
+void uci::engine_interface::do_nothing_loop(void) {
+    while (true) {
+        auto line = get_line();
+        auto [begin, end] = get_iterators(line);
+
+        if (*begin == "quit") {
+            return;
+        }
+    }
+}
+
+//
+// Default implementations
+//
 
 void uci::engine_interface::set_author_name(const char *name) {
     author_name = name;
@@ -37,3 +111,4 @@ bool uci::engine_interface::check_copy_protection(void) {
     can_ponder(false);
     return true;
 }
+
