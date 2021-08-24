@@ -17,7 +17,9 @@ void uci::engine_interface::run(void) {
     // If the engine doesnt start with a `uci` command, then it is not following
     // the uci protocol.
     if (*begin != "uci") {
-        std::cout << "Some error message"; // TODO(pabsa)
+        std::cout
+            << "Some error message"; // TODO(pabsa): Explain that the engine
+                                     // needs to follow the uci protocol.
         return;
     }
 
@@ -29,11 +31,8 @@ void uci::engine_interface::run(void) {
         return;
     }
 
-    for (const auto& [key, val] : config) {
-        // TODO(pabsa): Missing a way for options to identify themselves
-
-    }
-
+    enlist_options();
+    std::cout << "uciok\n";
 
     if (engine_requires_registration) {
         std::cout << "registration cheking\n";
@@ -46,8 +45,6 @@ void uci::engine_interface::run(void) {
 
     }
 }
-
-
 
 static std::stringstream get_line(void) {
     std::string buffer;
@@ -69,6 +66,22 @@ void uci::engine_interface::do_nothing_loop(void) {
             return;
         }
     }
+}
+
+void uci::engine_interface::enlist_options(void) {
+    for (const auto& [key, val] : config) {
+        std::cout << "option name " << key << " type "
+                  << uci::describe(val.get_type());
+
+        if (val.get_type() != uci::option_types::button) {
+            std::cout << " default " << val.get_value();
+        }
+
+        if (val.get_type() == uci::option_types::combo) {
+
+        }
+    }
+
 }
 
 //

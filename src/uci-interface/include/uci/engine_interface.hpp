@@ -76,6 +76,11 @@ class engine_interface {
      */
     static void do_nothing_loop(void);
 
+    /**
+     * Will tell the GUI the options that it can modify
+     */
+    static void enlist_options(void);
+
     const char* author_name = nullptr;
     const char* engine_name = nullptr;
     bool engine_requires_registration = false;
