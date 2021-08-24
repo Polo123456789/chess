@@ -13,13 +13,7 @@ namespace uci {
 /**
  * The types the options can be
  */
-enum class option_types {
-    check,
-    spin,
-    combo,
-    button,
-    string
-};
+enum class option_types { check, spin, combo, button, string };
 
 /**
  * @return A string representation of the given option
@@ -32,7 +26,7 @@ std::string describe(option_types o);
  */
 class option {
    public:
-    using call_back_t = void (*)(const option&);
+    using call_back_t = void (*)(const option &);
 
     template<option_types type>
     [[nodiscard]] auto as(void) const;
@@ -68,11 +62,29 @@ class option {
         return type;
     }
 
+    [[nodiscard]] const std::string &get_value(void) const {
+        return value;
+    }
+
+    void set_value(std::string v) {
+        value = std::move(v);
+    }
+
+    [[nodiscard]] const std::vector<std::string> &get_combo_values(void) const {
+        return combo_values;
+    }
+
+    void run_callback(void) const {
+        if (call_back != nullptr) {
+            call_back(*this);
+        }
+    }
+
    private:
-    option_types type;
-    std::string value;
+    option_types             type;
+    std::string              value;
     std::vector<std::string> combo_values;
-    call_back_t call_back = nullptr;
+    call_back_t              call_back = nullptr;
 
     void throw_on_wrong_type(option_types expected) const;
 };
