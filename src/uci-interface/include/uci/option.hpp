@@ -86,6 +86,8 @@ class option {
     std::vector<std::string> combo_values;
     call_back_t              call_back = nullptr;
 
+    // TODO(pabsa): Add support for a range for spin values
+
     void throw_on_wrong_type(option_types expected) const;
 };
 
@@ -98,7 +100,7 @@ template<>
 template<>
 [[nodiscard]] inline auto option::as<option_types::spin>(void) const {
     throw_on_wrong_type(option_types::spin);
-    return std::stoi(value);
+    return std::stoll(value);
 }
 
 template<>
