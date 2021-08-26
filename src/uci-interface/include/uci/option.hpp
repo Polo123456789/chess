@@ -23,7 +23,7 @@ enum class option_types { check, spin, combo, button, string };
 std::string describe(option_types o);
 
 /**
- * TODO(pabsa): Document
+ * Will hold the range of values that a spin option can hold.
  */
 struct spin_range {
     [[nodiscard]] bool in_range(int64_t v) const {
@@ -35,7 +35,7 @@ struct spin_range {
 };
 
 /**
- * The options that can be set by the GUI to configure the behaviour of the
+ * The options that can be set by the GUI to configure the behavior of the
  * engine
  */
 class option {
