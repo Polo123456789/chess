@@ -6,7 +6,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
-
+#include <iterator>
 
 namespace uci {
 

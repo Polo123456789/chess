@@ -9,6 +9,7 @@
 TEST_CASE("Option creation", "[uci] [uci::option]") { // NOLINT
     using uci::option;
     using uci::option_types;
+    using uci::spin_range;
 
     SECTION("Check") {
         option true_one(true);
@@ -19,14 +20,20 @@ TEST_CASE("Option creation", "[uci] [uci::option]") { // NOLINT
     }
 
     SECTION("Spin") {
-        constexpr int64_t no_test_cases = 10; // Dont go to big here
+        constexpr int64_t no_test_cases = 10; // Dont go too big here
         constexpr int64_t half = no_test_cases/2;
         constexpr int64_t upper_limit = half;
         constexpr int64_t lower_limit = - half;
+
+        spin_range test_range = {
+            -no_test_cases,
+            no_test_cases
+        };
+
         static_assert(lower_limit < upper_limit);
 
         for (auto i = lower_limit; i != upper_limit; i++) {
-            option a_number(i);
+            option a_number(i, test_range);
 
             CHECK(a_number.as<option_types::spin>() == i);
         }

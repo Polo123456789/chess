@@ -2,6 +2,7 @@
 #include <utility>
 
 using uci::option_types;
+using uci::spin_range;
 
 // This code was generated automatically with `enum-describer`, dont modify it.
 // If the enum changes, use it again.
@@ -32,8 +33,8 @@ uci::option::option(bool val, call_back_t on_change)
     : type(option_types::check), value(val ? "true" : "false"),
       call_back(on_change) {}
 
-uci::option::option(int64_t val, call_back_t on_change)
-    : type(option_types::spin), value(std::to_string(val)),
+uci::option::option(int64_t val, spin_range r, call_back_t on_change)
+    : type(option_types::spin), value(std::to_string(val)), range(r),
       call_back(on_change) {}
 
 

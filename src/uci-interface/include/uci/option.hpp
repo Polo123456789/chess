@@ -1,11 +1,13 @@
 #ifndef UCI_INTERFACE_OPTION_HPP
 #define UCI_INTERFACE_OPTION_HPP
 
+#include <algorithm>
 #include <stdexcept>
 #include <string>
 #include <cstdint>
 #include <vector>
 #include <exception>
+#include <limits>
 #include <initializer_list>
 
 namespace uci {
@@ -19,6 +21,18 @@ enum class option_types { check, spin, combo, button, string };
  * @return A string representation of the given option
  */
 std::string describe(option_types o);
+
+/**
+ * TODO(pabsa): Document
+ */
+struct spin_range {
+    [[nodiscard]] bool in_range(int64_t v) const {
+        return std::clamp(v, min, max) == v;
+    }
+
+    int64_t min = std::numeric_limits<int64_t>::min(); // NOLINT
+    int64_t max = std::numeric_limits<int64_t>::max(); // NOLINT
+};
 
 /**
  * The options that can be set by the GUI to configure the behaviour of the
@@ -39,7 +53,7 @@ class option {
     /**
      * For an option type `spin`
      */
-    explicit option(int64_t val, call_back_t on_change = nullptr);
+    explicit option(int64_t val, spin_range r, call_back_t on_change = nullptr);
 
     /**
      * For an option type `combo`
@@ -74,6 +88,10 @@ class option {
         return combo_values;
     }
 
+    [[nodiscard]] const spin_range &get_spin_range(void) const {
+        return range;
+    }
+
     void run_callback(void) const {
         if (call_back != nullptr) {
             call_back(*this);
@@ -84,9 +102,8 @@ class option {
     option_types             type;
     std::string              value;
     std::vector<std::string> combo_values;
+    spin_range               range;
     call_back_t              call_back = nullptr;
-
-    // TODO(pabsa): Add support for a range for spin values
 
     void throw_on_wrong_type(option_types expected) const;
 };
