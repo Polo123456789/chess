@@ -25,12 +25,13 @@ void uci::engine_interface::run(void) {
 
     // If options couldt be loaded, then log the error and wait for quit
     if (!load_options()) {
-        uci::info::log(uci::info::cstring{
-            "There was an error loading the default options"});
+        using uci::info::log;
+        using uci::info::cstring;
+
+        log(cstring{"There was an error loading the default options"});
         do_nothing_loop();
         return;
     }
-
     enlist_options();
     std::cout << "uciok\n";
 
@@ -78,6 +79,11 @@ void uci::engine_interface::enlist_options(void) {
         }
 
         if (val.get_type() == uci::option_types::combo) {
+
+        }
+
+        // TODO(pabsan): Print range for spin type options
+        if (val.get_type() == uci::option_types::spin) {
 
         }
     }
