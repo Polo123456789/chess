@@ -79,5 +79,10 @@ TEST_CASE("Option Enlistment", "[uci] [uci::option] [uci::engine_interface]") {
     uci::engine_interface::enlist_options();
 
     auto output = new_out.str();
+
+    auto info_message = std::string("Current output:\n") + output
+                        + "\n\nExpected:\n" + expected_output;
+
+    INFO(info_message)
     CHECK(unordered_line_compare(output, expected_output));
 }
