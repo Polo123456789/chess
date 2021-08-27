@@ -9,6 +9,7 @@ add_executable(unit-tests
     "./unit/main.cpp"
     "./unit/info.cpp"
     "./unit/option_creation.cpp"
+    "./unit/enlist_options.cpp"
 )
 target_include_directories(unit-tests PRIVATE "./../include/")
 target_include_directories(unit-tests PRIVATE ${CATCH_INCLUDE_PATH})
