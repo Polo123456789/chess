@@ -6,17 +6,17 @@
 static std::vector<std::string> get_line(void);
 
 void uci::engine_interface::run(void) {
-    auto line = get_line();
+    auto first_line = get_line();
 
-    // If the engine doesnt start with a `uci` command, then it is not following
-    // the uci protocol.
-    if (line.front() != "uci") {
+    // If the engine doesn't start with a `uci` command, then it is not
+    // following the uci protocol.
+    if (first_line.front() != "uci") {
         std::cout
             << "To interact with this engine you need to use the UCI protocol";
         return;
     }
 
-    // If options couldt be loaded, then log the error and wait for quit
+    // If options couldn't be loaded, then log the error and wait for quit
     if (!load_options()) {
         using uci::info::log;
         using uci::info::cstring;
@@ -29,16 +29,16 @@ void uci::engine_interface::run(void) {
     enlist_options();
     std::cout << "uciok\n";
 
-    if (engine_requires_registration) {
-        std::cout << "registration cheking\n";
-        if (!check_register()) {
-            std::cout << "registration error\n";
-        }
+    if (!check_copy_protection_if_required()) {
+        do_nothing_loop();
+        return;
+    }
+    if (!check_registration_if_required()) {
+        do_nothing_loop();
+        return;
     }
 
-    if (engine_requires_copyprotection) {
 
-    }
 }
 
 static std::vector<std::string> get_line(void) {
@@ -50,10 +50,33 @@ static std::vector<std::string> get_line(void) {
                                     std::istream_iterator<std::string>());
 }
 
+bool uci::engine_interface::check_registration_if_required(void) {
+    if (engine_requires_registration) {
+        std::cout << "registration checking\n";
+        if (!check_register()) {
+            std::cout << "registration error\n";
+            // TODO(pabsa): Check with code and user
+        }
+        std::cout << "registration ok\n";
+    }
+    return true;
+}
+
+bool uci::engine_interface::check_copy_protection_if_required(void) {
+    if (engine_requires_copyprotection) {
+        std::cout << "copyprotection checking\n";
+        if (!check_copy_protection()) {
+            std::cout << "copyprotection error\n";
+            return false;
+        }
+        std::cout << "copyprotection ok\n";
+    }
+    return true;
+}
+
 void uci::engine_interface::do_nothing_loop(void) {
     while (true) {
         auto line = get_line();
-
         if (line.front() == "quit") {
             return;
         }

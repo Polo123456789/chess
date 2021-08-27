@@ -80,6 +80,19 @@ class engine_interface {
      */
     static void enlist_options(void);
 
+    /**
+     * Will check for registration if needed. If it returns false then the
+     * engine shouldnt work properly. (It will enter the `do_nothing_loop`)
+     */
+    bool check_registration_if_required(void);
+
+    /**
+     * Will check for copyprotection if needed. If it returns false then the
+     * engine shouldnt work properly. (It will enter the `do_nothing_loop`)
+     */
+    bool check_copy_protection_if_required(void);
+
+
    private:
     const char* author_name = nullptr;
     const char* engine_name = nullptr;
