@@ -51,27 +51,52 @@ static std::vector<std::string> get_line(void) {
 }
 
 bool uci::engine_interface::check_registration_if_required(void) {
-    if (engine_requires_registration) {
-        std::cout << "registration checking\n";
-        if (!check_register()) {
-            std::cout << "registration error\n";
-            // TODO(pabsa): Check with code and user
-        }
-        std::cout << "registration ok\n";
+    if (!engine_requires_registration) {
+        return true;
     }
+    std::cout << "registration checking\n";
+
+    if (!check_register()) {
+        std::cout << "registration ok\n";
+        return true;
+    }
+
+    std::cout << "registration error\n";
+
+    bool registration_error = true;
+    do {
+        auto line = get_line();
+        std::string name;
+        std::string code;
+        if (line.front() != "register") {
+            continue;
+        }
+
+        if (line[1] == "latter") {
+            continue;
+        }
+
+        // TODO(pabsa): Get code and name, then check.
+        // NOTE: name and code can contain spaces
+
+        std::cout << "registration error\n";
+    } while (registration_error);
     return true;
 }
 
 bool uci::engine_interface::check_copy_protection_if_required(void) {
-    if (engine_requires_copyprotection) {
-        std::cout << "copyprotection checking\n";
-        if (!check_copy_protection()) {
-            std::cout << "copyprotection error\n";
-            return false;
-        }
-        std::cout << "copyprotection ok\n";
+    if (!engine_requires_copyprotection) {
+        return true;
     }
-    return true;
+    std::cout << "copyprotection checking\n";
+
+    if (check_copy_protection()) {
+        std::cout << "copyprotection ok\n";
+        return true;
+    }
+
+    std::cout << "copyprotection error\n";
+    return false;
 }
 
 void uci::engine_interface::do_nothing_loop(void) {
