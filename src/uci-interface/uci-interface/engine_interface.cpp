@@ -79,6 +79,8 @@ void uci::engine_interface::enlist_options(void) {
             std::cout << " min " << val.get_spin_range().min << " max "
                       << val.get_spin_range().max;
         }
+
+        std::cout << '\n';
     }
 }
 
