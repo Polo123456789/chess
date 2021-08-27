@@ -4,19 +4,14 @@
 
 #include <utility>
 
-using line_iterators = std::pair<std::istream_iterator<std::string>,
-                                 std::istream_iterator<std::string>>;
-
-static std::stringstream get_line(void);
-static line_iterators get_iterators(std::istream& stream);
+static std::vector<std::string> get_line(void);
 
 void uci::engine_interface::run(void) {
     auto line = get_line();
-    auto [begin, end] = get_iterators(line);
 
     // If the engine doesnt start with a `uci` command, then it is not following
     // the uci protocol.
-    if (*begin != "uci") {
+    if (line.front() != "uci") {
         std::cout
             << "Some error message"; // TODO(pabsa): Explain that the engine
                                      // needs to follow the uci protocol.
@@ -47,23 +42,20 @@ void uci::engine_interface::run(void) {
     }
 }
 
-static std::stringstream get_line(void) {
+static std::vector<std::string> get_line(void) {
     std::string buffer;
     std::getline(std::cin, buffer);
-    return std::stringstream(buffer);
-}
+    std::stringstream line(buffer);
 
-static line_iterators get_iterators(std::istream& stream) {
-    return {std::istream_iterator<std::string>{stream},
-            std::istream_iterator<std::string>{}};
+    return std::vector<std::string>(std::istream_iterator<std::string>(line),
+                                    std::istream_iterator<std::string>());
 }
 
 void uci::engine_interface::do_nothing_loop(void) {
     while (true) {
         auto line = get_line();
-        auto [begin, end] = get_iterators(line);
 
-        if (*begin == "quit") {
+        if (line.front() == "quit") {
             return;
         }
     }
