@@ -9,7 +9,7 @@
 // not get rid of it.
 
 // clang-format off
-constexpr const char *expected_output =
+static constexpr const char *expected_output =
 R"(info depth 10 seldepth 15 time 1000 nodes 20000 
 info multipv 1 pv d2d4 g8f6 c2c4 c7c5 score cp 10 
 info score mate 3 
