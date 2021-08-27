@@ -1,5 +1,4 @@
 #include <uci/engine_interface.hpp>
-#include <uci/config.hpp>
 #include <uci/info.hpp>
 
 #include <utility>
@@ -13,8 +12,7 @@ void uci::engine_interface::run(void) {
     // the uci protocol.
     if (line.front() != "uci") {
         std::cout
-            << "Some error message"; // TODO(pabsa): Explain that the engine
-                                     // needs to follow the uci protocol.
+            << "To interact with this engine you need to use the UCI protocol";
         return;
     }
 
@@ -23,7 +21,8 @@ void uci::engine_interface::run(void) {
         using uci::info::log;
         using uci::info::cstring;
 
-        log(cstring{"There was an error loading the default options"});
+        log(cstring{"There was an error loading the default options. Waiting "
+                    "for `quit` command..."});
         do_nothing_loop();
         return;
     }
@@ -71,15 +70,16 @@ void uci::engine_interface::enlist_options(void) {
         }
 
         if (val.get_type() == uci::option_types::combo) {
-
+            for (const auto& v : val.get_combo_values()) {
+                std::cout << " var " << v;
+            }
         }
 
-        // TODO(pabsan): Print range for spin type options
         if (val.get_type() == uci::option_types::spin) {
-
+            std::cout << " min " << val.get_spin_range().min << " max "
+                      << val.get_spin_range().max;
         }
     }
-
 }
 
 //

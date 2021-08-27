@@ -1,19 +1,15 @@
-/**
- * This file is just used for quick manual testing, feel free to ignore it.
- */
-
 #include <uci/engine_interface.hpp>
 
 #include <gsl/gsl>
+#include <catch2/catch.hpp>
 
 static constexpr const char* expected_output = 
 R"()";
 
-int main(void) {
+TEST_CASE("Option Enlistment", "[uci] [uci::option] [uci::engine_interface]") {
     auto clean_options = gsl::finally([&](void) -> void {
-            std::cout << "Loaded options: " << uci::config.size() << '\n';
+            REQUIRE(!uci::config.empty());
             uci::config.clear();
-            std::cout << "Options cleared \n";
     });
 
     auto do_nothing_button = []([[maybe_unused]] const uci::option& o) -> void {};
@@ -35,8 +31,4 @@ int main(void) {
     // String option
     uci::config["NalimovPath"] = uci::option(std::string("<empty>"));
 
-
-    uci::engine_interface::enlist_options();
-
-    return 0;
 }

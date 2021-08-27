@@ -2,6 +2,7 @@
 #define UCI_ENGINE_INTERFACE_HPP
 
 #include <uci/limits.hpp>
+#include <uci/config.hpp>
 
 #include <string>
 #include <sstream>
@@ -69,8 +70,6 @@ class engine_interface {
     engine_interface& operator=(const engine_interface& other) = delete;
     engine_interface& operator=(engine_interface&& other) = delete;
 
-   private:
-
     /**
      * Will ignore all input until given a `quit` command
      */
@@ -81,6 +80,7 @@ class engine_interface {
      */
     static void enlist_options(void);
 
+   private:
     const char* author_name = nullptr;
     const char* engine_name = nullptr;
     bool engine_requires_registration = false;
