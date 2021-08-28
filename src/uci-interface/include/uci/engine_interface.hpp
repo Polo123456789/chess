@@ -1,9 +1,13 @@
 #ifndef UCI_ENGINE_INTERFACE_HPP
 #define UCI_ENGINE_INTERFACE_HPP
 
-#include <string>
-
 #include <uci/limits.hpp>
+#include <uci/config.hpp>
+
+#include <string>
+#include <sstream>
+#include <iostream>
+#include <iterator>
 
 namespace uci {
 
@@ -27,7 +31,7 @@ class engine_interface {
     /**
      * Loads default options
      */
-    virtual bool load_options(void);
+    [[nodiscard]] virtual bool load_options(void);
 
     /**
      * The following are metadata functions
@@ -51,12 +55,43 @@ class engine_interface {
     /*
      * Sets the engine to ponder mode
      */
-    virtual bool ponder_mode(void) = 0;
+    [[nodiscard]] virtual bool ponder_mode(void) = 0;
 
     /*
      * Sets the engine to search mode
      */
-    virtual bool search_mode(void) = 0;
+    [[nodiscard]] virtual bool search_mode(void) = 0;
+
+    void run(void);
+
+    virtual ~engine_interface() = default;
+    engine_interface(const engine_interface& other) = delete;
+    engine_interface(engine_interface&& other) = delete;
+    engine_interface& operator=(const engine_interface& other) = delete;
+    engine_interface& operator=(engine_interface&& other) = delete;
+
+    /**
+     * Will ignore all input until given a `quit` command
+     */
+    static void do_nothing_loop(void);
+
+    /**
+     * Will tell the GUI the options that it can modify
+     */
+    static void enlist_options(void);
+
+    /**
+     * Will check for registration if needed. If it returns false then the
+     * engine shouldnt work properly. (It will enter the `do_nothing_loop`)
+     */
+    bool check_registration_if_required(void);
+
+    /**
+     * Will check for copyprotection if needed. If it returns false then the
+     * engine shouldnt work properly. (It will enter the `do_nothing_loop`)
+     */
+    bool check_copy_protection_if_required(void);
+
 
    private:
     const char* author_name = nullptr;
