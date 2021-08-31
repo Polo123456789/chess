@@ -72,7 +72,7 @@ bool uci::engine_interface::check_registration_if_required(void) {
             continue;
         }
 
-        if (line[1] == "latter") {
+        if (line[1] == "later") {
             continue;
         }
 
