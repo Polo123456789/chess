@@ -37,7 +37,15 @@ void uci::engine_interface::run(void) {
         do_nothing_loop();
         return;
     }
-    
+    while (true) {
+        auto line = get_line();
+        if (line.front() == "isready") {
+            break;
+        }
+        //todo: setoptions
+    }
+    //todo: initialize()
+    std::cout << "readyok\n";
 
 }
 
