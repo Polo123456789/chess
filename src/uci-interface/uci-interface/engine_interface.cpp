@@ -40,13 +40,13 @@ void uci::engine_interface::run(void) {
     while (true) {
         auto line = get_line();
         if (line.front() == "isready") {
+            //initializing
+            std::cout << "readyok\n";
             break;
         }
-        //todo: setoptions
+        //todo setoptions
     }
-    //todo: initialize()
-    std::cout << "readyok\n";
-
+    loop();
 }
 
 static std::vector<std::string> get_line(void) {
