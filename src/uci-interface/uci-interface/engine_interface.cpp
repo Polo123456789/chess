@@ -37,8 +37,16 @@ void uci::engine_interface::run(void) {
         do_nothing_loop();
         return;
     }
-
-
+    while (true) {
+        auto line = get_line();
+        if (line.front() == "isready") {
+            //initializing
+            std::cout << "readyok\n";
+            break;
+        }
+        //todo setoptions
+    }
+    loop();
 }
 
 static std::vector<std::string> get_line(void) {
@@ -130,6 +138,10 @@ void uci::engine_interface::enlist_options(void) {
 
         std::cout << '\n';
     }
+}
+
+void uci::engine_interface::loop(void) {
+    //todo
 }
 
 //
