@@ -37,7 +37,7 @@ void uci::engine_interface::run(void) {
         do_nothing_loop();
         return;
     }
-
+    
 
 }
 
@@ -130,6 +130,10 @@ void uci::engine_interface::enlist_options(void) {
 
         std::cout << '\n';
     }
+}
+
+void uci::engine_interface::loop(void) {
+    
 }
 
 //

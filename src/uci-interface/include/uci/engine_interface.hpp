@@ -62,7 +62,15 @@ class engine_interface {
      */
     [[nodiscard]] virtual bool search_mode(void) = 0;
 
+    /*
+    * Runs the engine
+    */
     void run(void);
+
+    /*
+    * Main engine loop
+    */
+    void loop(void);
 
     virtual ~engine_interface() = default;
     engine_interface(const engine_interface& other) = delete;
