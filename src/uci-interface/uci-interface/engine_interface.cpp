@@ -133,7 +133,7 @@ void uci::engine_interface::enlist_options(void) {
 }
 
 void uci::engine_interface::loop(void) {
-    
+    //todo
 }
 
 //
