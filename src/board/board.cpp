@@ -18,7 +18,7 @@ piece board::set(position pos, piece p) {
 void board::clear() noexcept {
     for (auto& row : board) {
         for (auto& col : row) {
-            col = piece{piece_type_t::blank, color_t::white};
+            col = piece{piece_type::blank, piece_color::white};
         }
     }
 }
@@ -27,31 +27,31 @@ void board::initial_position() noexcept {
     this->clear();
 
     constexpr std::array<piece, board_size> initial_row = {
-        piece{piece_type_t::rook,   color_t::white},
-        piece{piece_type_t::knight, color_t::white},
-        piece{piece_type_t::bishop, color_t::white},
-        piece{piece_type_t::queen,  color_t::white},
-        piece{piece_type_t::king,   color_t::white},
-        piece{piece_type_t::bishop, color_t::white},
-        piece{piece_type_t::knight, color_t::white},
-        piece{piece_type_t::rook,   color_t::white}
+        piece{piece_type::rook,   piece_color::white},
+        piece{piece_type::knight, piece_color::white},
+        piece{piece_type::bishop, piece_color::white},
+        piece{piece_type::queen,  piece_color::white},
+        piece{piece_type::king,   piece_color::white},
+        piece{piece_type::bishop, piece_color::white},
+        piece{piece_type::knight, piece_color::white},
+        piece{piece_type::rook,   piece_color::white}
     };
 
     board[0] = initial_row;
     for (auto& col : board[0]) {
-        col.color = color_t::black;
+        col.color = piece_color::black;
     }
 
     for (auto& col : board[1]) {
-        col = piece{piece_type_t::pawn, color_t::black};
+        col = piece{piece_type::pawn, piece_color::black};
     }
 
     board[board_size - 1] = initial_row;
     for (auto& col : board[board_size - 1]) {
-        col.color = color_t::white;
+        col.color = piece_color::white;
     }
 
     for (auto& col : board[board_size - 2]) {
-        col = piece{piece_type_t::pawn, color_t::white};
+        col = piece{piece_type::pawn, piece_color::white};
     }
 }

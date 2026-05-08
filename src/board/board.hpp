@@ -9,7 +9,7 @@
 
 constexpr size_t board_size = 8;
 
-enum class piece_type_t : uint8_t {
+enum class piece_type : uint8_t {
     blank,
     king,
     queen,
@@ -19,7 +19,7 @@ enum class piece_type_t : uint8_t {
     pawn
 };
 
-enum class color_t : uint8_t {
+enum class piece_color : uint8_t {
     white,
     black
 };
@@ -30,8 +30,8 @@ struct position {
 };
 
 struct piece {
-    piece_type_t piece_type;
-    color_t color;
+    piece_type type;
+    piece_color color;
 };
 
 using internal_board_t = std::array<std::array<piece, board_size>, board_size>;
@@ -46,7 +46,7 @@ struct board {
     void initial_position() noexcept;
 
     internal_board_t board;
-    color_t turn = color_t::white;
+    piece_color turn = piece_color::white;
     uint64_t moves_without_capture_or_pawn_move = 0;
 };
 
