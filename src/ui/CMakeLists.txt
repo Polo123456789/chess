@@ -1,2 +1,5 @@
-add_library(ui dummy.cpp dummy.hpp)
+add_library(ui ui.cpp)
 target_include_directories(ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(ui PRIVATE engine board)
+target_include_directories(ui PRIVATE $<TARGET_PROPERTY:engine,INTERFACE_INCLUDE_DIRECTORIES>)
+target_include_directories(ui PRIVATE $<TARGET_PROPERTY:board,INTERFACE_INCLUDE_DIRECTORIES>)

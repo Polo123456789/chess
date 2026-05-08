@@ -1,6 +1,11 @@
-#include <iostream>
+#include <board.hpp>
+#include <ui.hpp>
 
 int main() {
-    std::cout << "Hello world\n";
+    board board;
+    board.initial_position();
+
+    naive_board_draw(board);
+
     return 0;
 }
